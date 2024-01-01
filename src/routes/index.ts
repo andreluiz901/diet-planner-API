@@ -1,9 +1,11 @@
-import { FastifyInstance } from "fastify";
+import { app } from "../app";
+import { userRoutes } from "../modules/users/users.controllers";
+import { mealsRoutes } from "../modules/meals/meals.controllers";
 
-export async function userRoutes(app: FastifyInstance) {
-  app.get("/", async (req, reply) => {
-    return "hello world";
-  });
-}
+app.register(userRoutes, {
+  prefix: "users",
+});
 
-export async function mealsRoutes(app: FastifyInstance) {}
+app.register(mealsRoutes, {
+  prefix: "meals",
+});

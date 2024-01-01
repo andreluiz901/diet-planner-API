@@ -1,11 +1,8 @@
 import fastfy from "fastify";
+import { userRoutes } from "./routes";
 
 export const app = fastfy();
 
-app.get("/", () => {
-  return "hello world";
-});
-
-app.listen(3010, () => {
-  console.log("Server running!");
+app.register(userRoutes, {
+  prefix: "users",
 });

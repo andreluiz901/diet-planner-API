@@ -69,7 +69,7 @@ export async function userRoutes(app: FastifyInstance) {
       })
       .returning("*");
 
-    return reply.status(201).send({ data: responseCreatedUser });
+    return reply.status(201).send({ data: responseCreatedUser[0] });
   });
 
   app.get("/", async (req, reply) => {

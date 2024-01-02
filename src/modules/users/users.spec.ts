@@ -44,6 +44,32 @@ describe("Users Routes", () => {
         goal: "LOSE",
       })
     );
-    newUser.body;
+  });
+
+  it("should be able to identify a user beetween requisitions", async () => {
+    const newUser = await request(app.server)
+      .post("/users")
+      .send({
+        name: "name of user",
+        username: "valid_",
+        email: "valid@email.com",
+        password: "validPassword@123",
+        confirm_password: "validPassword@123",
+        age: 22,
+        current_weight: 100,
+        goal_weight: 80,
+        goal: "LOSE",
+      })
+      .expect(201);
+
+    const loggedInUser = await request(app.server)
+      .post("/auth/signIn")
+      .send({
+        email: "valid@email.com",
+        password: "validPassword@123",
+      })
+      .expect(200);
+
+    expect(loggedInUser.body.access_token).toBeTypeOf("string");
   });
 });

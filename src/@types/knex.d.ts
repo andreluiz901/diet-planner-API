@@ -5,11 +5,14 @@ declare module "knex/types/tables" {
     users: {
       id: string;
       name: string;
-      created_at: string;
+      username: string;
+      email: string;
+      password: string;
+      created_at: date;
       age: number;
-      start_weight: number;
-      current_weight: number;
-      goal_weight: number;
+      start_weight?: number;
+      current_weight?: number;
+      goal_weight?: number;
       goal: string;
     };
   }

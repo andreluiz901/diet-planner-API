@@ -3,6 +3,7 @@ import { dbKnex } from "../../database";
 import { randomUUID } from "crypto";
 import { z } from "zod";
 import { findOneByEmail, findOneByUsername } from "./users.services";
+import { encryptString } from "../../utils/encrypt-utils";
 
 export async function userRoutes(app: FastifyInstance) {
   app.post("/", async (req, reply) => {
@@ -51,13 +52,15 @@ export async function userRoutes(app: FastifyInstance) {
       return reply.status(400).send({ message: "username já em uso!" });
     }
 
-    const users = dbKnex("users")
+    const hashedPassword = await encryptString(password);
+
+    const responseCreatedUser = await dbKnex("users")
       .insert({
         id: randomUUID(),
         name,
         username,
         email,
-        password,
+        password: hashedPassword,
         age,
         current_weight,
         start_weight: current_weight,
@@ -66,7 +69,7 @@ export async function userRoutes(app: FastifyInstance) {
       })
       .returning("*");
 
-    return users;
+    return reply.status(201).send({ data: responseCreatedUser });
   });
 
   app.get("/", async (req, reply) => {

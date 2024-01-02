@@ -15,6 +15,15 @@ declare module "knex/types/tables" {
       goal_weight?: number;
       goal: string;
     };
+
+    meals: {
+      id: string;
+      name: string;
+      description: string;
+      date_hour: date;
+      is_on_diet: boolean;
+      user_id: string;
+    };
   }
 }
 

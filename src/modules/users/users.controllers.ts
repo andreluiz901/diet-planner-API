@@ -77,4 +77,18 @@ export async function userRoutes(app: FastifyInstance) {
 
     return users;
   });
+
+  app.get("/:id", async (req, reply) => {
+    const { id }: any = req.params;
+
+    const user: any = await dbKnex("users").where({ id }).first();
+
+    if (user) {
+      const { password: _, ...userData } = user;
+
+      return reply.status(200).send(userData);
+    }
+
+    return reply.status(404).send();
+  });
 }

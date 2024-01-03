@@ -72,4 +72,12 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     return reply.status(201).send(mealDeleted[0]);
   });
+
+  app.get("/", { preHandler: authorization }, async (req, reply) => {
+    const userId = req.id;
+
+    const userMeals = await dbKnex("meals").select().where({ user_id: userId });
+
+    return reply.status(201).send(userMeals);
+  });
 }

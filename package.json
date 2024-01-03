@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "test": "vitest",
+    "test": "vitest --no-file-parallelism ",
     "knex": "node --import tsx ./node_modules/.bin/knex --knexfile ./knexFile.ts",
     "new-migration": "npm run knex -- migrate:make --knexfile ./knexFile.ts create-user-table"
   },

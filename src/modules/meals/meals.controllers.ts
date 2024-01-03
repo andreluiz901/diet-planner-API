@@ -29,6 +29,6 @@ export async function mealsRoutes(app: FastifyInstance) {
       })
       .returning("*");
 
-    return reply.status(200).send(newMeal);
+    return reply.status(201).send({ data: newMeal });
   });
 }

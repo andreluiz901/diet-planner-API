@@ -128,8 +128,5 @@ describe("Meals Routes", () => {
         user_id: newUser.body.data.id,
       })
     );
-
-    // expect(updatedMeal.body.id).toBeTypeOf("string");
-    // expect(updatedMeal.body.user_id).toBeTypeOf("string");
   });
 });

@@ -31,4 +31,32 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     return reply.status(201).send({ data: newMeal });
   });
+
+  app.put("/:id", { preHandler: authorization }, async (req, reply) => {
+    const updateMealBodySchema = z.object({
+      name: z.string(),
+      description: z.string(),
+      date_hour: z.string(),
+      is_on_diet: z.boolean(),
+    });
+
+    const { id }: any = req.params;
+    const userId = req.id;
+
+    const { name, description, date_hour, is_on_diet } =
+      updateMealBodySchema.parse(req.body);
+
+    const mealUpdated = await dbKnex("meals")
+      .update({
+        name,
+        description,
+        date_hour: new Date(date_hour).toISOString(),
+        is_on_diet,
+      })
+      .where({ id })
+      .andWhere({ user_id: userId })
+      .returning("*");
+
+    return reply.status(201).send(mealUpdated[0]);
+  });
 }
